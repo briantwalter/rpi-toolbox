@@ -1,0 +1,21 @@
+#!/bin/bash
+
+CMD=/usr/bin/tvservice
+XRE=/usr/bin/xrefresh
+
+case "$1" in
+  on)	
+    ${CMD} --preferred > /dev/null
+    fbset -depth 8
+    fbset -depth 16
+    ${XRE} -display :0
+    ;;
+  off)	
+    $CMD -o > /dev/null 2>&1
+    ;;
+  *)	
+    echo "Usage: $0 {on|off}"
+    exit 2
+    ;;
+esac
+exit 0
