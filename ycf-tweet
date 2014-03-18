@@ -2,12 +2,13 @@
 
 # Tweet a cat fact in Yoda speak from the CLI
 
+NODEJS=/usr/local/bin/node
 YCFCLI=~/nodejs-ycf/ycfcli.js
 TWTBIN=/usr/bin/ttytter
 
 if [ -f ${YCFCLI} ]; then
   #echo "DEBUG: found ${YCFCLI}"
-  STATUS=`node ${YCFCLI}`
+  STATUS=`${NODEJS} ${YCFCLI}`
   CHARCT=`echo ${STATUS} | wc -m`
   #echo "DEBUG: found ${CHARCT} characters in message ==>"
   #echo "DEBUG: ${STATUS}"
