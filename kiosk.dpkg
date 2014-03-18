@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# specific packages needed for browser kiosk
+
+apt-get -y install \
+unclutter \
+chromium \
+ttf-mscorefonts-installer \
+browser-plugin-gnash \
+x11-xserver-utils
