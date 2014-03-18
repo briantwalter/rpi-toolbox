@@ -6,7 +6,7 @@
 @xset s off
 @xset -dpms
 @xset s noblank
-/usr/bin/chromium --kiosk --incognito http://www.instructables.com/
+/usr/bin/chromium --kiosk --incognito https://twitter.com/YodasCatFacts
 /usr/bin/unclutter -idle 0
 #
 # add the following line to /etc/lightdm/lightdm.conf
