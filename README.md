@@ -11,4 +11,6 @@ Toolbox of scripts and utilities for the raspberry pi.
 
 `kiosk.apt` bash script to install needed packages for kiosk.
 
+`RCtime.py` Python code from Adafruit to test photocells.
+
 `ycf-tweet` bash script to tweet cat facts in Yoda speak.
