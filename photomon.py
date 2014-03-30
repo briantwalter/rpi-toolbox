@@ -15,11 +15,11 @@ GPIO.setwarnings(False)
 DEBUG = 1
 # configuration variables
 gpiopin = 22	# gpio pin on the rpi
-samples = 4 	# number of loop iterations
-interval = 1 	# in seconds or partial seconds
+samples = 10 	# number of loop iterations
+interval = 5 	# in seconds or partial seconds
 totalloops = 0	# total number of times this ran
-loratio = .65	# tolerance for turing on hdmi
-hiratio = 1.35	# tolerance for turning off hdmi
+loratio = .65	# tolerance for turing off hdmi
+hiratio = 1.35	# tolerance for turning no hdmi
 hdmictl = "/home/pi/rpi-toolbox/hdmictl"
 
 # set up gpio
@@ -27,11 +27,11 @@ GPIO.setmode(GPIO.BCM)
  
 # turn on hdmi using a bash script
 def hdmion():
-  os.system("su - pi -c \"" + hdmictl + " on\"")
+  os.system("su - pi -c \"/bin/bash -l -c \'" + hdmictl + " on\'\"")
 
 # turn off hdmi using a bash script
 def hdmioff():
-  os.system("su - pi -c \"" + hdmictl + " on\"")
+  os.system("su - pi -c \"/bin/bash -l -c \'" + hdmictl + " off\'\"")
 
 # read values for the photocell
 def readpin(readpin):
@@ -60,28 +60,26 @@ def getaverage():
 # main
 
 # start from a known state
+hdmioff()
+time.sleep(25)
 hdmion()
 # forever loop making sure the minimum samples have been collected
 while True:
   if totalloops > 0:
-    print "DEBUG: totalloops " + str(totalloops)
+    #print "DEBUG: totalloops " + str(totalloops)
     oldaverage = newaverage
-    print "DEBUG: oldaverage is " + str(oldaverage)
+    #print "DEBUG: oldaverage is " + str(oldaverage)
     newaverage = getaverage()
-    print "DEBUG: newaverage is " + str(newaverage)
+    #print "DEBUG: newaverage is " + str(newaverage)
     ratio = oldaverage / float(newaverage)
-    print "DEBUG: ratio is " + str(ratio)
+    #print "DEBUG: ratio is " + str(ratio)
     if ratio < loratio:
-      hdmion()
-    if ratio > hiratio:
       hdmioff()
+    if ratio > hiratio:
+      hdmion()
     totalloops += 1
   else:
-    print "DEBUG: totalloops " + str(totalloops)
+    #print "DEBUG: totalloops " + str(totalloops)
     newaverage = getaverage()
     #print "DEBUG: newaverage is " + str(newaverage)
     totalloops += 1
-
-
-
-
