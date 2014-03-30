@@ -1,0 +1,12 @@
+start prog
+turn hdmi on
+collect at least 10 samples
+sum and average the 10 samples
+average becomes baseline
+collect another 10 samples
+calculate average
+compare new average to baseline and calculate delta
+if new average is -35% lower then turn on hdmi
+if new average is +35% higher then turn off hdmi
+new average becomes basline
+loop to another 10 samples
