@@ -1,0 +1,17 @@
+begin
+  prog = irexec
+  button = BTN_0
+  #config = echo "DEBUG: got button 0"
+  #config = ~/rpi-toolbox/hdmictl off
+  config = ~/rpi-toolbox/rndyoda random
+  repeat = 0
+end
+begin
+  prog = irexec
+  button = BTN_1
+  #config = echo "DEBUG: got button 1"
+  #config = ~/rpi-toolbox/hdmictl on
+  config = ~/rpi-toolbox/rndyoda laugh
+  repeat = 0
+end
+
