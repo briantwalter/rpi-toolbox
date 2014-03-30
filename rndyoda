@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# play a random sound clip from a directory of clips
+
+CLIPDIR=~/yodaclips
+
+case "$1" in
+  laugh)
+    aplay -q ${CLIPDIR}/laugh.wav
+    ;;
+  random)
+    CLIP=`ls ${CLIPDIR} | shuf -n 1`
+    aplay -q ${CLIPDIR}/${CLIP}
+    ;;
+  *)
+    echo "Usage: $0 laugh|random"
+    exit 3
+    ;;
+esac
+
+:
