@@ -2,7 +2,7 @@
 
 # play a random sound clip from a directory of clips
 
-CLIPDIR=~/yodaclips
+CLIPDIR=~pi/yodaclips
 
 case "$1" in
   laugh)
