@@ -17,14 +17,24 @@ DEBUG = 1
 gpiopin = 22	# gpio pin on the rpi
 samples = 4 	# number of loop iterations
 interval = 1 	# in seconds or partial seconds
+totalloops = 0	# total number of times this ran
+loratio = .65	# tolerance for turing on hdmi
+hiratio = 1.35	# tolerance for turning off hdmi
 hdmictl = "/home/pi/rpi-toolbox/hdmictl"
 
-# start at a known state and turn on the hdmi
-os.system("su - pi -c \"" + hdmictl + " on\"")
-
+# set up gpio
 GPIO.setmode(GPIO.BCM)
  
-def readpin (readpin):
+# turn on hdmi using a bash script
+def hdmion():
+  os.system("su - pi -c \"" + hdmictl + " on\"")
+
+# turn off hdmi using a bash script
+def hdmioff():
+  os.system("su - pi -c \"" + hdmictl + " on\"")
+
+# read values for the photocell
+def readpin(readpin):
     reading = 0
     GPIO.setup(readpin, GPIO.OUT)
     GPIO.output(readpin, GPIO.LOW)
@@ -35,19 +45,42 @@ def readpin (readpin):
       reading += 1
     return reading
  
-def getaverage ():
+# getaverage for the number of samples
+def getaverage():
   sum = 0
   for n in range(0, samples):
     sum = sum + readpin(gpiopin)
-    print "DEBUG: sum is " + str(sum)
+    #print "DEBUG: sum is " + str(sum)
   else:
-    print "DEBUG: total sum is " + str(sum)
+    #print "DEBUG: total sum is " + str(sum)
     average = sum / samples
-    print "DEBUG: average is " + str(average)
+    #print "DEBUG: average is " + str(average)
     return average
 
-newaverage = getaverage()
-print "DEBUG: newaverage is " + str(newaverage)
+# main
+
+# start from a known state
+hdmion()
+# forever loop making sure the minimum samples have been collected
+while True:
+  if totalloops > 0:
+    print "DEBUG: totalloops " + str(totalloops)
+    oldaverage = newaverage
+    print "DEBUG: oldaverage is " + str(oldaverage)
+    newaverage = getaverage()
+    print "DEBUG: newaverage is " + str(newaverage)
+    ratio = oldaverage / float(newaverage)
+    print "DEBUG: ratio is " + str(ratio)
+    if ratio < loratio:
+      hdmion()
+    if ratio > hiratio:
+      hdmioff()
+    totalloops += 1
+  else:
+    print "DEBUG: totalloops " + str(totalloops)
+    newaverage = getaverage()
+    #print "DEBUG: newaverage is " + str(newaverage)
+    totalloops += 1
 
 
 
