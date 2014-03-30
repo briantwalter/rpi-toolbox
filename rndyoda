@@ -13,7 +13,7 @@ case "$1" in
     aplay -q ${CLIPDIR}/${CLIP}
     ;;
   *)
-    echo "Usage: $0 laugh|random"
+    echo "Usage: $0 {laugh|random}"
     exit 3
     ;;
 esac
