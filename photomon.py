@@ -15,10 +15,10 @@ GPIO.setwarnings(False)
 DEBUG = 1
 # configuration variables
 gpiopin = 22	# gpio pin on the rpi
-samples = 10 	# number of loop iterations
+samples = 18 	# number of loop iterations
 interval = 5 	# in seconds or partial seconds
 totalloops = 0	# total number of times this ran
-loratio = .45	# tolerance for turing off hdmi
+loratio = .55	# tolerance for turing off hdmi
 hiratio = 1.75	# tolerance for turning on hdmi
 hdmictl = "/home/pi/rpi-toolbox/hdmictl"
 
