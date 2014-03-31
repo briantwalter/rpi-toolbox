@@ -18,8 +18,8 @@ gpiopin = 22	# gpio pin on the rpi
 samples = 10 	# number of loop iterations
 interval = 5 	# in seconds or partial seconds
 totalloops = 0	# total number of times this ran
-loratio = .65	# tolerance for turing off hdmi
-hiratio = 1.35	# tolerance for turning no hdmi
+loratio = .55	# tolerance for turing off hdmi
+hiratio = 1.75	# tolerance for turning on hdmi
 hdmictl = "/home/pi/rpi-toolbox/hdmictl"
 
 # set up gpio
