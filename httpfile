@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# simple script to transfer a single 
+# file over http using netcat
+
+FILE=$1
+PORT=$2
+RC=`which nc > /dev/null; echo $?`
+
+# check for netcat
+if [ ${RC} -ne 0 ]; then
+  echo "FATAL: you need netcat installed for this to work"
+  exit 1
+fi
+# check for arguments
+if [ "${FILE}" == "" ] || [ "${PORT}" == "" ]; then
+  echo "ERROR: usage: $0 filename port"
+  exit 2
+fi
+# check for good file
+if [ -f ${FILE} ]; then
+  echo "INFO: serving file ${FILE} on port ${PORT}"
+  { echo -ne "HTTP/1.0 200 OK\r\n\r\n"; cat ${FILE}; } | nc -l ${PORT}
+else 
+  echo "FATAL: file ${FILE} is not accessible"
+  exit 1
+fi
+echo "INFO: done"
+

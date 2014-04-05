@@ -9,6 +9,8 @@ Toolbox of scripts and utilities for the raspberry pi.
 
 `hdmictl` bash script to turn HDMI connected monitor on and off.
 
+`httpfile` bash script to transfer a single file over http
+
 `kiosk.apt` bash script to install needed packages for kiosk.
 
 `photomon.py` python code to turn HDMI on and off based on photocell.
