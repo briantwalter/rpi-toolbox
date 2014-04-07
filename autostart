@@ -6,9 +6,9 @@
 @xset s off
 @xset -dpms
 @xset s noblank
-/usr/bin/chromium --kiosk --incognito https://twitter.com/YodasCatFacts
-/usr/bin/unclutter -idle 0
-/usr/bin/irexec -d
+@/usr/bin/unclutter -idle 0
+@/usr/bin/irexec -d
+@/home/pi/rpi-toolbox/startycf
 #
 # add the following line to /etc/lightdm/lightdm.conf
 # xserver-command=X -s 0 dpms

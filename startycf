@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# startup script for YCF kiosk to be called by autostart
+#
+NODE="/usr/local/bin/node"
+NODEAPP="/home/pi/nodejs-ycf/ycf.js"
+BROWSER="/usr/bin/chromium --kiosk --incognito http://localhost:8800"
+
+# simple startup
+if [ -f ${NODEAPP} ]; then
+  ${NODE} ${NODEAPP} &
+  sleep 10	# wait for node to start
+  ${BROWSER}
+fi
+
