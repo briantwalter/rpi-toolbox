@@ -17,4 +17,6 @@ Toolbox of scripts and utilities for the raspberry pi.
 
 `RCtime.py` python code from Adafruit to test photocells.
 
+`startycf` bash hack to start Yoda's Cat Facts node server from autostart
+
 `ycf-tweet` bash script to tweet cat facts in Yoda speak.
