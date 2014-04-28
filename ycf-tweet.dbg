@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Tweet a cat fact in Yoda speak from the CLI
 
@@ -13,7 +13,8 @@ if [ -f ${YCFCLI} ]; then
   echo "DEBUG: ${STATUS}"
   if [[ ${CHARCT} -gt 10 && ${CHARCT} -lt 140 ]]; then
     echo "DEBUG: got a possible status between 10 and 140 chars"
-    #echo "DEBUG: would run... ${TWTBIN} -ssl -status=\"${STATUS}\""
+    echo "DEBUG: would run... ${TWTBIN} -ssl -status=\"${STATUS}\""
     ${TWTBIN} -ssl -status="${STATUS}" > /dev/null 2>&1
+    echo $?
   fi
 fi
