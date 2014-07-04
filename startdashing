@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# startup script for Dashing kiosk to be called by autostart
+#
+
+RVMENV="/home/pi/.rvm/scripts/rvm"
+DASHDIR="/home/pi/Dev/dashing-home/server"
+DASHCMD="dashing start -d"
+BROWSER="/usr/bin/chromium --kiosk --incognito http://localhost:3030/home"
+
+# simple startup
+if [ -f ${RVMENV} ]; then
+  source ${RVMENV}
+  cd ${DASHDIR}
+  ${DASHCMD}
+  sleep 20	
+  ${BROWSER}
+fi

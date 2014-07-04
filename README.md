@@ -7,6 +7,7 @@ Toolbox of scripts and utilities for the raspberry pi.
 
 `crontab` basic crontab with comments for easy reading
 
+
 `hdmictl` bash script to turn HDMI connected monitor on and off.
 
 `httpfile` bash script to transfer a single file over http
@@ -17,6 +18,8 @@ Toolbox of scripts and utilities for the raspberry pi.
 
 `RCtime.py` python code from Adafruit to test photocells.
 
-`startycf` bash hack to start Yoda's Cat Facts node server from autostart
+`startdashing` bash hack to start up Dashing.
+
+`startycf` bash hack to start Yoda's Cat Facts node server from autostart.
 
 `ycf-tweet` bash script to tweet cat facts in Yoda speak.
