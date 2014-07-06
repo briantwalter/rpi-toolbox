@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# startup script for Dashing kiosk to be called by autostart
+#
+
+BROWSER="/usr/bin/chromium --kiosk --incognito http://dash.app.walternet.us/home"
+
+# run it
+${BROWSER}
