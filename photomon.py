@@ -7,10 +7,12 @@
 #
  
 # imports
-import os      
-import time
 import datetime
+import simplejson as json
 import math
+import os      
+import requests
+import time
 import RPi.GPIO as GPIO
 from daemon import runner
 from ConfigParser import SafeConfigParser
@@ -72,6 +74,8 @@ def main():
     totalloops = config.getint('photomon', 'totalloops')
     loratio = config.getfloat('photomon', 'loratio')
     hiratio = config.getfloat('photomon', 'hiratio')
+    apiend = config.get('photomon', 'apiend')
+    apikey = config.get('photomon', 'apikey')
     # start from a known state
     hdmioff()
     time.sleep(25)
@@ -82,13 +86,15 @@ def main():
             time.sleep(5)
             oldaverage = newaverage
             newaverage = getaverage()
+            payload = {'auth_token': apikey, 'current': newaverage, 'last': oldaverage}
+            req = requests.post(apiend, data=json.dumps(payload))
             ratio = oldaverage / float(newaverage)
             now = rightnow()
             if ratio < loratio:
-                print "INFO: turning off HDMI" + now
+                print "INFO: turning off HDMI" + str(now)
                 hdmioff()
             if ratio > hiratio:
-                print "INFO: turning on HDMI" + now
+                print "INFO: turning on HDMI" + str(now)
                 hdmion()
             totalloops += 1
         else:
