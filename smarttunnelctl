@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#
+# smarttunnelctl	SmartTunnel Controller
+# version		0.0.1
+# author		Brian Walter @briantwalter
+# description		Toggle WebIOPi RESTful api for 
+#			turning tunnel on and off
+
+GPIO=2
+APIEND=http://smarttunnel.lan.walternet.us:8000/GPIO
+
+case "$1" in
+  on)
+    curl -X POST ${APIEND}/{$GPIO}/value/1
+    ;;
+  off)
+    curl -X POST ${APIEND}/{$GPIO}/value/0
+    ;;
+  *)
+    echo "usage: $0 <on|off>"
+    exit 1
+    ;;
+esac

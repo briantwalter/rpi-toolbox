@@ -18,6 +18,8 @@ Toolbox of scripts and utilities for the raspberry pi.
 
 `RCtime.py` python code from Adafruit to test photocells.
 
+`smarttunnelctl` bash script that cURLs a WebIOPi end point
+
 `startdashing` bash hack to start up Dashing.
 
 `startycf` bash hack to start Yoda's Cat Facts node server from autostart.
