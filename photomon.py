@@ -1,40 +1,44 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # 
-# photomon.py
-# 
-# control the hdmi port based on values from a photocell
+# photomon.py		HDMI control based on values from a photocell
+# version		0.1.2
+# author		Brian Walter @briantwalter
+# description		Auto-shutoff the display based on ambient lighting
 #
  
+# imports
 import os      
 import time
+import datetime
 import math
 import RPi.GPIO as GPIO
+from daemon import runner
+from ConfigParser import SafeConfigParser
+
+# GPIO set up
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-# debug settings
-DEBUG = 1
-# configuration variables
-gpiopin = 22	# gpio pin on the rpi
-samples = 10 	# number of loop iterations
-interval = 5 	# in seconds or partial seconds
-totalloops = 0	# total number of times this ran
-loratio = .55	# tolerance for turing off hdmi
-hiratio = 2.55	# tolerance for turning on hdmi
-hdmictl = "/home/pi/rpi-toolbox/hdmictl"
 
-# set up gpio
-GPIO.setmode(GPIO.BCM)
- 
+# grab configurations
+config = SafeConfigParser()
+config.read('photomon_conf.py')
+hdmictl = config.get('photomon', 'hdmictl')
+logfile = config.get('photomon', 'logfile')
+pidfile = config.get('photomon', 'pidfile')
+
 # turn on hdmi using a bash script
 def hdmion():
-  os.system("su - pi -c \"/bin/bash -l -c \'" + hdmictl + " on\'\"")
+    os.system("su - pi -c \"/bin/bash -l -c \'" + hdmictl + " on\'\"")
 
 # turn off hdmi using a bash script
 def hdmioff():
-  os.system("su - pi -c \"/bin/bash -l -c \'" + hdmictl + " off\'\"")
+    os.system("su - pi -c \"/bin/bash -l -c \'" + hdmictl + " off\'\"")
 
 # read values for the photocell
 def readpin(readpin):
+    # readpin config
+    interval = config.getfloat('photomon', 'interval')
+    gpiopin = config.getint('photomon', 'gpiopin')
     reading = 0
     GPIO.setup(readpin, GPIO.OUT)
     GPIO.output(readpin, GPIO.LOW)
@@ -42,44 +46,67 @@ def readpin(readpin):
     GPIO.setup(readpin, GPIO.IN)
     # This takes about 1 millisecond per loop cycle
     while (GPIO.input(readpin) == GPIO.LOW):
-      reading += 1
+        reading += 1
     return reading
  
 # getaverage for the number of samples
 def getaverage():
-  sum = 0
-  for n in range(0, samples):
-    sum = sum + readpin(gpiopin)
-    #print "DEBUG: sum is " + str(sum)
-  else:
-    #print "DEBUG: total sum is " + str(sum)
-    average = sum / samples
-    #print "DEBUG: average is " + str(average)
-    return average
+    # get samples config
+    samples = config.getint('photomon', 'samples')
+    gpiopin = config.getint('photomon', 'gpiopin')
+    sum = 0
+    for n in range(0, samples):
+        sum = sum + readpin(gpiopin)
+    else:
+        average = sum / samples
+        return average
 
-# main
+# simple timestamp for logs
+def rightnow():
+    now = datetime.datetime.now()
+    return now
 
-# start from a known state
-hdmioff()
-time.sleep(25)
-hdmion()
-# forever loop making sure the minimum samples have been collected
-while True:
-  if totalloops > 0:
-    #print "DEBUG: totalloops " + str(totalloops)
-    oldaverage = newaverage
-    #print "DEBUG: oldaverage is " + str(oldaverage)
-    newaverage = getaverage()
-    #print "DEBUG: newaverage is " + str(newaverage)
-    ratio = oldaverage / float(newaverage)
-    #print "DEBUG: ratio is " + str(ratio)
-    if ratio < loratio:
-      hdmioff()
-    if ratio > hiratio:
-      hdmion()
-    totalloops += 1
-  else:
-    #print "DEBUG: totalloops " + str(totalloops)
-    newaverage = getaverage()
-    #print "DEBUG: newaverage is " + str(newaverage)
-    totalloops += 1
+# define the main
+def main():
+    # get main configs
+    totalloops = config.getint('photomon', 'totalloops')
+    loratio = config.getfloat('photomon', 'loratio')
+    hiratio = config.getfloat('photomon', 'hiratio')
+    # start from a known state
+    hdmioff()
+    time.sleep(25)
+    hdmion()
+    # forever loop making sure the minimum samples have been collected
+    while True:
+        if totalloops > 0:
+            time.sleep(5)
+            oldaverage = newaverage
+            newaverage = getaverage()
+            ratio = oldaverage / float(newaverage)
+            now = rightnow()
+            if ratio < loratio:
+                print "INFO: turning off HDMI" + now
+                hdmioff()
+            if ratio > hiratio:
+                print "INFO: turning on HDMI" + now
+                hdmion()
+            totalloops += 1
+        else:
+            newaverage = getaverage()
+            totalloops += 1
+
+# main app class
+class App():
+    def __init__(self):
+        self.stdin_path = '/dev/null'
+        self.stdout_path = logfile
+        self.stderr_path = logfile
+        self.pidfile_path = pidfile
+        self.pidfile_timeout = 5
+    def run(self):
+        main()
+
+# execute the app according to run time argument
+app = App()
+daemon_runner = runner.DaemonRunner(app)
+daemon_runner.do_action()

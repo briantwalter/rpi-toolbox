@@ -1,0 +1,56 @@
+
+# Please make this file available to others
+# by sending it to <lirc@bartelmus.de>
+#
+# this config file was automatically generated
+# using lirc-0.9.0-pre1(default) on Thu Jul  3 18:30:55 2014
+#
+# contributed by 
+#
+# brand:                       irfile
+# model no. of remote control: 
+# devices being controlled by this remote:
+#
+
+begin remote
+
+  name  ascender
+  flags RAW_CODES
+  eps            30
+  aeps          100
+
+  gap          39830
+
+      begin raw_codes
+
+          name BTN_0
+             8985    4394     632     481     632     480
+              632     480     633     500     610     500
+              611     481     631     480     631     482
+              631    1613     611    1620     555    1663
+              561    1662     613    1613     583    1640
+              617    1622     598    1612     610    1612
+              561     552     610     479     634    1589
+              585     528     633     500     610     480
+              633     478     633     477     634    1589
+              587    1669     577     507     631    1614
+              582    1619     633    1591     607    1622
+              579
+
+          name BTN_1
+             8986    4389     612     524     587     527
+              586     523     588     503     609     511
+              601     503     608     504     607     525
+              588    1618     581    1665     584    1645
+              606    1614     585    1639     586    1617
+              607    1641     583    1624     602    1639
+              587    1637     589    1639     585     504
+              608     531     580     504     608     525
+              584     507     607     505     606     505
+              607     527     611    1614     585    1617
+              608    1639     586    1617     607    1619
+              632
+
+      end raw_codes
+
+end remote
