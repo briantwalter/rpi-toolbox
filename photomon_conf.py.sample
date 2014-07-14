@@ -1,0 +1,19 @@
+#
+# photomon_conf.py	Settings for Photocell Monitor
+# version		0.1.2
+# author		Brian Walter @briantwalter
+# description		For use with photomon.py
+#
+
+[photomon]
+gpiopin: 22    
+samples: 10    
+interval: 5    
+totalloops: 0  
+loratio: .55   
+hiratio: 2.55  
+hdmictl: /home/pi/Dev/rpi-toolbox/hdmictl
+logfile: /tmp/photomon.log
+pidfile: /tmp/photomon.pid
+apiend: http://dash.app.walternet.us/widget/light
+apikey: XXXXXXXXXXXXXXXXXXXX
