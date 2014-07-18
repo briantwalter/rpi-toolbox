@@ -77,9 +77,9 @@ def main():
     apiend = config.get('photomon', 'apiend')
     apikey = config.get('photomon', 'apikey')
     # start from a known state
-    hdmioff()
+    #hdmioff()
     time.sleep(25)
-    hdmion()
+    #hdmion()
     # forever loop making sure the minimum samples have been collected
     while True:
         if totalloops > 0:
@@ -92,10 +92,10 @@ def main():
             now = rightnow()
             if ratio < loratio:
                 print "INFO: turning off HDMI" + str(now)
-                hdmioff()
+                #hdmioff()
             if ratio > hiratio:
                 print "INFO: turning on HDMI" + str(now)
-                hdmion()
+                #hdmion()
             totalloops += 1
         else:
             newaverage = getaverage()
