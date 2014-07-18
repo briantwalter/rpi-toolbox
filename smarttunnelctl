@@ -9,12 +9,15 @@
 
 GPIO=2
 APIEND=http://smarttunnel.lan.walternet.us:8000/GPIO
+HDMICTL=/home/pi/Dev/rpi-toolbox/hdmictl
 
 case "$1" in
   on)
+    ${HDMICTL} on
     curl -X POST ${APIEND}/{$GPIO}/value/1
     ;;
   off)
+    ${HDMICTL} off
     curl -X POST ${APIEND}/{$GPIO}/value/0
     ;;
   *)
