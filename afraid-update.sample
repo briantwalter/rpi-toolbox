@@ -6,7 +6,7 @@
 # author		Brian Walter @briantwalter
 # description		Update an existing dynaic DNS record
 #  			set up at freedns.afraid.org meant
-#			to be dropped in /etc/cron.daily
+#			to be dropped in /etc/cron.hourly
 
 CURL=/usr/bin/curl
 APIKEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
