@@ -1,0 +1,21 @@
+#!/bin/bash -x
+
+#
+# afraid-update		Dynanic DNS updater for Afraid.org
+# version		0.0.1
+# author		Brian Walter @briantwalter
+# description		Update an existing dynaic DNS record
+#  			set up at freedns.afraid.org meant
+#			to be dropped in /etc/cron.daily
+
+CURL=/usr/bin/curl
+APIKEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+APIEND=http://freedns.afraid.org/dynamic/update.php
+
+# if we have cURL send it
+if [ -x ${CURL} ]; then 
+  ${CURL} -k ${APIEND}?${APIKEY} > /dev/null 2>&1
+else
+  echo "FATAL: could not find ${CURL}"
+fi
+
