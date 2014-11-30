@@ -2,7 +2,7 @@
 
 ## hack for bluetooth audio setup
 
-sudo apt-get install bluez pulseaudio-module-bluetooth python-gobject python-gobject-2
+sudo apt-get -y install bluez pulseaudio-module-bluetooth python-gobject python-gobject-2
 sudo usermod -a -G lp pi
 
 ## sudo vi /etc/bluetooth/audio.conf
