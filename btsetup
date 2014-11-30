@@ -1,0 +1,18 @@
+#!/bin/bash
+
+## hack for bluetooth audio setup
+
+sudo apt-get install bluez pulseaudio-module-bluetooth python-gobject python-gobject-2
+sudo usermod -a -G lp pi
+
+## sudo vi /etc/bluetooth/audio.conf
+## Add the following line after [General]:
+## Enable=Source,Sink,Media,Socket
+ 
+## sudo vi /etc/pulse/daemon.conf
+## ; resample-method = speex-float-3 
+## resample-method = trivial ; ADD THIS LINE
+
+amixer cset numid=3 1
+amixer set Master 100%
+## pacmd set-sink-volume 0 65537
